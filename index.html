@@ -1,4 +1,3 @@
-
 <html lang="lt">
 <head>
     <meta charset="UTF-8">
@@ -70,6 +69,14 @@
             background: rgba(255, 255, 255, 0.03);
             backdrop-filter: blur(8px);
             border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Duration selector styling */
+        .duration-option:checked + label {
+            background-color: var(--brand-gold);
+            border-color: var(--brand-gold);
+            color: var(--brand-deep);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         }
     </style>
 </head>
@@ -213,7 +220,7 @@
                         <button onclick="sendGeneralWhatsApp()" class="flex-1 bg-green-600 hover:bg-green-700 text-white py-5 rounded-2xl font-black text-center transition shadow-lg flex items-center justify-center gap-2">
                             <i class="fab fa-whatsapp text-2xl"></i> WhatsApp
                         </button>
-                        <a href="viber://chat?number=+37068743992" class="flex-1 bg-purple-600 hover:bg-purple-700 text-white py-5 rounded-2xl font-black text-center transition shadow-lg flex items-center justify-center gap-2">
+                        <a href="viber://chat?number=37068743992" class="flex-1 bg-purple-600 hover:bg-purple-700 text-white py-5 rounded-2xl font-black text-center transition shadow-lg flex items-center justify-center gap-2">
                             <i class="fab fa-viber text-2xl"></i> Viber
                         </a>
                     </div>
@@ -224,11 +231,11 @@
                         <h3 class="text-3xl font-black text-[#1a4332] business-card-font mb-8" data-i18n="working_hours_title">Darbo grafikas</h3>
                         <div class="space-y-4">
                             <div class="flex justify-between items-center p-6 bg-gray-50 rounded-2xl">
-                                <span class="font-bold text-gray-500 uppercase tracking-widest text-sm" data-i18n="days_week">Pirmad.-Penktad.</span>
+                                <span class="font-bold text-gray-500 uppercase tracking-widest text-sm" data-i18n="days_week">I - V</span>
                                 <span class="text-2xl font-black text-[#1a4332]">08:00 - 18:00</span>
                             </div>
                             <div class="flex justify-between items-center p-6 bg-gray-50 rounded-2xl">
-                                <span class="font-bold text-gray-500 uppercase tracking-widest text-sm" data-i18n="day_sat">Šeštadienis</span>
+                                <span class="font-bold text-gray-500 uppercase tracking-widest text-sm" data-i18n="day_sat">VI</span>
                                 <span class="text-2xl font-black text-[#1a4332]">09:00 - 14:00</span>
                             </div>
                         </div>
@@ -261,12 +268,31 @@
             
             <div class="relative z-10">
                 <h2 class="text-3xl font-black mb-1 text-[#1a4332] business-card-font" data-i18n="modal_title">Rezervacija</h2>
-                <p id="modalToolNameDisplay" class="text-amber-600 font-black mb-8 text-xl"></p>
+                <p id="modalToolNameDisplay" class="text-amber-600 font-black mb-6 text-xl"></p>
                 
-                <form onsubmit="return false;" class="space-y-8">
+                <form onsubmit="return false;" class="space-y-6">
                     <input type="hidden" id="selectedToolInput">
                     
-                    <div class="grid grid-cols-1 gap-6">
+                    <div class="grid grid-cols-1 gap-5">
+                        <!-- Trukmės pasirinkimas -->
+                        <div>
+                            <label class="block text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] mb-3" data-i18n="label_duration">Nuomos trukmė</label>
+                            <div class="grid grid-cols-3 gap-2">
+                                <div class="relative">
+                                    <input type="radio" name="duration" id="dur1h" value="1 val." class="duration-option hidden" checked>
+                                    <label for="dur1h" class="block text-center py-3 bg-gray-50 border-2 border-gray-100 rounded-xl font-bold text-sm cursor-pointer transition-all" data-i18n="price_h1">1 val.</label>
+                                </div>
+                                <div class="relative">
+                                    <input type="radio" name="duration" id="dur3h" value="3 val." class="duration-option hidden">
+                                    <label for="dur3h" class="block text-center py-3 bg-gray-50 border-2 border-gray-100 rounded-xl font-bold text-sm cursor-pointer transition-all" data-i18n="price_h3">3 val.</label>
+                                </div>
+                                <div class="relative">
+                                    <input type="radio" name="duration" id="dur24h" value="Para" class="duration-option hidden">
+                                    <label for="dur24h" class="block text-center py-3 bg-gray-50 border-2 border-gray-100 rounded-xl font-bold text-sm cursor-pointer transition-all" data-i18n="price_d1">Para</label>
+                                </div>
+                            </div>
+                        </div>
+
                         <div>
                             <label class="block text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] mb-3" data-i18n="label_date">Kada planuojate?</label>
                             <input type="date" id="resDate" required class="w-full bg-gray-50 border-2 border-gray-100 rounded-2xl p-4 focus:border-amber-400 outline-none font-bold text-[#1a4332]">
@@ -277,7 +303,7 @@
                         </div>
                     </div>
 
-                    <div class="space-y-4">
+                    <div class="space-y-4 pt-4 border-t border-gray-100">
                         <p class="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] text-center" data-i18n="label_method">Pasirinkite susisiekimo būdą</p>
                         
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -327,9 +353,9 @@
                 days_week: "I - V", day_sat: "VI", contact_title: "Susisiekite dabar", 
                 modal_title: "Rezervacija", label_date: "Kada planuojate?", label_phone: "Jūsų tel. numeris (nebūtina)",
                 btn_reserve: "Rezervuoti", btn_call: "Skambinti tiesiogiai", label_method: "Pasirinkite susisiekimo būdą",
-                price_h1: "1 VAL.", price_h3: "3 VAL.", price_d1: "PARA",
+                price_h1: "1 VAL.", price_h3: "3 VAL.", price_d1: "PARA", label_duration: "Nuomos trukmė",
                 footer_desc: "Profesionali įrankių nuoma Visagine", copyright: "© 2026 Visaginas.",
-                wa_res_prefix: "REZERVACIJA", wa_tool: "Įrankis", wa_date: "Data", wa_phone: "Mano tel"
+                wa_res_prefix: "REZERVACIJA", wa_tool: "Įrankis", wa_date: "Data", wa_phone: "Mano tel", wa_duration: "Trukmė"
             },
             ru: {
                 nav_catalog: "Каталог", nav_contacts: "Контакты", nav_faq: "Вопросы",
@@ -341,9 +367,9 @@
                 days_week: "Пн - Пт", day_sat: "Сб", contact_title: "Свяжитесь сейчас",
                 modal_title: "Бронирование", label_date: "Когда планируете?", label_phone: "Ваш тел. (необязательно)",
                 btn_reserve: "Бронировать", btn_call: "Позвонить напрямую", label_method: "Выберите способ связи",
-                price_h1: "1 ЧАС", price_h3: "3 ЧАСА", price_d1: "СУТКИ",
+                price_h1: "1 ЧАС", price_h3: "3 ЧАСА", price_d1: "СУТКИ", label_duration: "Длительность",
                 footer_desc: "Проф. аренда инструментов в Висагинасе", copyright: "© 2026 Висагинас.",
-                wa_res_prefix: "БРОНИРОВАНИЕ", wa_tool: "Инструмент", wa_date: "Дата", wa_phone: "Мой тел"
+                wa_res_prefix: "БРОНИРОВАНИЕ", wa_tool: "Инструмент", wa_date: "Дата", wa_phone: "Мой тел", wa_duration: "Срок"
             },
             en: {
                 nav_catalog: "Catalog", nav_contacts: "Contacts", nav_faq: "F.A.Q.",
@@ -355,9 +381,9 @@
                 days_week: "Mon - Fri", day_sat: "Sat", contact_title: "Contact Now",
                 modal_title: "Reservation", label_date: "Pick a date", label_phone: "Your phone (optional)",
                 btn_reserve: "Reserve", btn_call: "Call directly", label_method: "Choose contact method",
-                price_h1: "1 HR", price_h3: "3 HRS", price_d1: "DAY",
+                price_h1: "1 HR", price_h3: "3 HRS", price_d1: "DAY", label_duration: "Duration",
                 footer_desc: "Professional tool rental in Visaginas", copyright: "© 2026 Visaginas.",
-                wa_res_prefix: "RESERVATION", wa_tool: "Tool", wa_date: "Date", wa_phone: "My tel"
+                wa_res_prefix: "RESERVATION", wa_tool: "Tool", wa_date: "Date", wa_phone: "My tel", wa_duration: "Duration"
             }
         };
 
@@ -464,16 +490,24 @@
             const date = document.getElementById('resDate').value;
             const phone = document.getElementById('resPhone').value;
             
-            const msg = `${t.wa_res_prefix}:\n${t.wa_tool}: ${toolName}\n${t.wa_date}: ${date}${phone ? '\n' + t.wa_phone + ': ' + phone : ''}`;
+            // Gauname pasirinktą trukmę
+            const durationEl = document.querySelector('input[name="duration"]:checked');
+            // Reikia išversti pasirinktą reikšmę žinutei, arba tiesiog paimti label tekstą
+            const durationText = document.querySelector(`label[for="${durationEl.id}"]`).innerText;
+            
+            const msg = `${t.wa_res_prefix}:\n${t.wa_tool}: ${toolName}\n${t.wa_duration}: ${durationText}\n${t.wa_date}: ${date}${phone ? '\n' + t.wa_phone + ': ' + phone : ''}`;
             
             if (method === 'whatsapp') {
                 window.open(`https://wa.me/${myPhoneNumber}?text=${encodeURIComponent(msg)}`, '_blank');
             } else if (method === 'viber') {
-                window.open(`viber://chat?number=${myPhoneNumber}&draft=${encodeURIComponent(msg)}`, '_blank');
-                // Fallback jei viber:// neveikia tiesiogiai
+                const viberUrl = `viber://chat?number=${myPhoneNumber}&draft=${encodeURIComponent(msg)}`;
+                window.location.href = viberUrl;
+
                 setTimeout(() => {
-                    window.location.href = `viber://pa?chatURI=${myPhoneNumber}&text=${encodeURIComponent(msg)}`;
-                }, 100);
+                    if (!document.hidden) {
+                         window.open(`viber://chat?number=${myPhoneNumber}`, '_blank');
+                    }
+                }, 1000);
             }
             closeModal();
         }
@@ -487,4 +521,3 @@
     </script>
 </body>
 </html>
-
