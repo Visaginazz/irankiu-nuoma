@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sodo ir statybinių įrankių NUOMA - Anatolij Dudalev</title>
+    
+    <!-- FAVICON - Pakeičia popieriaus lapą į įrankio piktogramą naršyklės skirtuke -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🛠️</text></svg>">
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
@@ -72,7 +76,7 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        /* Duration selector styling */
+        /* Trukmės pasirinkimo stilius */
         .duration-option:checked + label {
             background-color: var(--brand-gold);
             border-color: var(--brand-gold);
@@ -80,7 +84,7 @@
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         }
 
-        /* Counter styling */
+        /* Skaitliuko stilius */
         .visitor-counter {
             background: rgba(255, 255, 255, 0.05);
             padding: 0.5rem 1rem;
@@ -125,7 +129,7 @@
         </div>
     </nav>
 
-    <!-- Hero -->
+    <!-- Hero dalis -->
     <header class="hero-gradient py-24 md:py-32 px-4 text-white relative overflow-hidden">
         <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center relative z-10">
             <div>
@@ -184,7 +188,7 @@
             </div>
             
             <div id="tools-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Užpildoma per JS -->
+                <!-- Užpildoma per JavaScript -->
             </div>
         </div>
     </section>
@@ -194,7 +198,7 @@
         <div class="max-w-4xl mx-auto px-4">
             <h2 class="text-4xl font-black text-[#1a4332] business-card-font text-center mb-16" data-i18n="nav_faq">Dažniausiai užduodami klausimai</h2>
             <div class="space-y-6" id="faq-container">
-                <!-- Užpildoma per JS -->
+                <!-- Užpildoma per JavaScript -->
             </div>
         </div>
     </section>
@@ -261,6 +265,7 @@
         </div>
     </section>
 
+    <!-- Footer -->
     <footer class="bg-[#0f2e21] text-white py-16">
         <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-8 text-center md:text-left">
             <div>
@@ -496,7 +501,6 @@
             document.getElementById('reserveModal').classList.remove('hidden');
             document.body.style.overflow = 'hidden';
             
-            // Užpildome šios dienos datą kaip numatytąją
             const today = new Date().toISOString().split('T')[0];
             document.getElementById('resDate').value = today;
         }
@@ -512,9 +516,7 @@
             const date = document.getElementById('resDate').value;
             const phone = document.getElementById('resPhone').value;
             
-            // Gauname pasirinktą trukmę
             const durationEl = document.querySelector('input[name="duration"]:checked');
-            // Reikia išversti pasirinktą reikšmę žinutei, arba tiesiog paimti label tekstą
             const durationText = document.querySelector(`label[for="${durationEl.id}"]`).innerText;
             
             const msg = `${t.wa_res_prefix}:\n${t.wa_tool}: ${toolName}\n${t.wa_duration}: ${durationText}\n${t.wa_date}: ${date}${phone ? '\n' + t.wa_phone + ': ' + phone : ''}`;
@@ -538,22 +540,19 @@
             window.open(`https://wa.me/${myPhoneNumber}?text=Sveiki, domina nuoma.`, '_blank');
         }
 
-        // Lankytojų skaitliuko funkcija naudojant nemokamą CounterAPI
         async function updateVisitorCount() {
             try {
-                // Sukuriame unikalų ID jūsų svetainei
                 const namespace = "anatolij-nuoma-visaginas";
                 const response = await fetch(`https://api.counterapi.dev/v1/${namespace}/visits/up`);
                 const data = await response.json();
                 document.getElementById('count').innerText = data.count.toLocaleString();
             } catch (error) {
-                document.getElementById('count').innerText = "124"; // Atsarginis variantas jei API neveiktų
+                document.getElementById('count').innerText = "124"; 
             }
         }
 
         window.onclick = (e) => { if (e.target == document.getElementById('reserveModal')) closeModal(); }
         
-        // Paleidžiame viską
         changeLang('lt');
         updateVisitorCount();
     </script>
